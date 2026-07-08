@@ -1,0 +1,15 @@
+askpaper/
+uploads/
+.env
+Artifacts
+logs/
+vectorstore/
+__pycache__/
+*.pyc
+*.egg-info/
+build
+dist
+.DS_Store
+Thumbs.db
+.ipynb_checkpoints/
+data/*.pdf

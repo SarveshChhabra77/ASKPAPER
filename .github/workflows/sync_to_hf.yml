@@ -1,0 +1,22 @@
+name: Sync to Hugging Face Spaces
+
+on:
+  push:
+    branches: [main]
+  # Allows manual execution of this workflow from the GitHub Actions tab
+  workflow_dispatch:
+
+jobs:
+  sync-to-hub:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Push to Hugging Face Spaces
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
+        run: |
+          git push --no-verify --force https://sarvesh77:$HF_TOKEN@huggingface.co/spaces/sarvesh77/Askpaper main

@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en" style="background:#07080f;color:#f1f5f9;color-scheme:dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="color-scheme" content="dark">
+    <meta name="description" content="AskPaper — Upload any PDF and get AI-powered, cited answers instantly.">
+    <title>AskPaper AI | Interactive PDF Assistant</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
+    <link rel="stylesheet" href="/static/styles.css?v=5">
+</head>
+<body>
+
+    <!-- Ambient glow blobs -->
+    <div class="bg-blob blob-1"></div>
+    <div class="bg-blob blob-2"></div>
+    <div class="bg-blob blob-3"></div>
+
+    <div class="app-container">
+
+        <!-- ── Mobile Nav ── -->
+        <header class="mobile-nav">
+            <button class="menu-toggle" onclick="window.toggleSidebar()" aria-label="Open menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="logo">
+                <span class="logo-icon"><i class="fas fa-atom"></i></span>
+                AskPaper
+            </div>
+            <button class="mobile-upload-icon" onclick="document.getElementById('pdfFile').click()" aria-label="Upload PDF">
+                <i class="fas fa-plus"></i>
+            </button>
+        </header>
+
+        <!-- ── Sidebar ── -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span class="logo-icon"><i class="fas fa-atom"></i></span>
+                    AskPaper
+                </div>
+                <button class="close-sidebar" onclick="window.toggleSidebar()"><i class="fas fa-xmark"></i></button>
+            </div>
+
+            <div class="sidebar-content">
+                <!-- Upload CTA -->
+                <button class="upload-btn-sidebar" onclick="document.getElementById('pdfFile').click()">
+                    <i class="fas fa-plus"></i> New Document
+                </button>
+
+                <!-- Navigation -->
+                <ul class="nav-menu">
+                    <a class="nav-item active" href="#" onclick="window.startNewChat()">
+                        <i class="fas fa-house"></i><span>Home</span>
+                    </a>
+                    <a class="nav-item" href="#" onclick="window.showLibraryModal()">
+                        <i class="fas fa-layer-group"></i><span>Library</span>
+                    </a>
+                    <a class="nav-item" href="#" onclick="window.showNotesModal()">
+                        <i class="fas fa-pen-to-square"></i><span>Notes</span>
+                    </a>
+                    <a class="nav-item" href="#" onclick="window.showSettingsModal()">
+                        <i class="fas fa-sliders"></i><span>Settings</span>
+                    </a>
+                </ul>
+
+                <!-- Session history -->
+                <div class="history-section-header">Recent Sessions</div>
+                <div id="history" class="history-list">
+                    <div class="empty-history">No papers analyzed</div>
+                </div>
+
+                <!-- Bottom Card -->
+                <div class="assistant-card">
+                    <div class="assistant-card-icon">
+                        <i class="fas fa-microchip"></i>
+                        <i class="fas fa-sparkles sparkle-mini"></i>
+                    </div>
+                    <h4>AI Research Assistant</h4>
+                    <p>Upload any PDF and ask anything. Get accurate answers with citations.</p>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Sidebar dimmer (mobile) -->
+        <div class="sidebar-overlay" id="sidebarOverlay" onclick="window.toggleSidebar()"></div>
+
+        <!-- ── Main Chat ── -->
+        <main class="chat-area">
+
+            <div id="chatBox" class="chat-box">
+                <div class="chat-box-content" id="chatContent">
+
+                    <!-- Hero Header -->
+                    <div class="header-wrapper" id="headerWrapper">
+                        <div class="header-text">
+                            <div class="header-badge">
+                                <i class="fas fa-circle-nodes"></i> Powered by Llama 3.1 &amp; FAISS
+                            </div>
+                            <h1>Ask anything about<br><span class="gradient-text">your PDF</span></h1>
+                            <p>Semantic search meets LLM reasoning — get cited, accurate answers.</p>
+                        </div>
+                        <div class="header-visual">
+                            <div class="hv-ring ring-1"></div>
+                            <div class="hv-ring ring-2"></div>
+                            <div class="hv-ring ring-3"></div>
+                            <div class="hv-core">
+                                <i class="fas fa-robot"></i>
+                            </div>
+                            <div class="hv-orb orb-1"></div>
+                            <div class="hv-orb orb-2"></div>
+                            <div class="hv-orb orb-3"></div>
+                        </div>
+                    </div>
+
+                    <!-- Active PDF card -->
+                    <div class="active-pdf-card" id="activePdfCard" style="display: none;">
+                        <div class="pdf-info-left">
+                            <div class="pdf-icon-box">
+                                <i class="far fa-file-pdf"></i>
+                            </div>
+                            <div class="pdf-text-meta">
+                                <h3 id="activePdfName">Document.pdf</h3>
+                                <span id="activePdfMeta">Ready for questions</span>
+                            </div>
+                            <div class="pdf-live-dot"></div>
+                        </div>
+                        <button class="change-pdf-btn" id="changePdfBtn" onclick="document.getElementById('pdfFile').click()">
+                            <i class="fas fa-rotate"></i> Change
+                        </button>
+                    </div>
+
+                    <!-- Welcome / Drop Zone -->
+                    <div class="welcome-container" id="welcomeContainer">
+
+                        <div class="drop-zone" id="dropZone"
+                             onclick="document.getElementById('pdfFile').click()"
+                             ondrop="window.dropHandler(event)"
+                             ondragover="window.dragOverHandler(event)"
+                             ondragleave="window.dragLeaveHandler(event)">
+                            <div class="dz-art">
+                                <div class="dz-icon-wrap">
+                                    <i class="fas fa-cloud-arrow-up"></i>
+                                </div>
+                            </div>
+                            <div class="dz-text">
+                                <strong>Drop your PDF here</strong>
+                                <span>or click to browse &mdash; Max 20 MB</span>
+                            </div>
+                            <div class="dz-type-badge"><i class="far fa-file-pdf"></i> PDF</div>
+                        </div>
+
+                        <div class="cards-container" id="suggestionsContainer">
+                            <div class="suggest-card" onclick="window.clickPrompt('Summarize key findings')">
+                                <div class="sc-icon-wrap"><i class="fas fa-chart-bar"></i></div>
+                                <h4>Summarize key findings</h4>
+                                <p>Extract the main contributions, findings, and results from the PDF.</p>
+                                <i class="far fa-paper-plane sc-send"></i>
+                            </div>
+                            <div class="suggest-card" onclick="window.clickPrompt('Explain methodology')">
+                                <div class="sc-icon-wrap"><i class="fas fa-flask"></i></div>
+                                <h4>Explain methodology</h4>
+                                <p>Identify and explain key algorithms, techniques, and procedures.</p>
+                                <i class="far fa-paper-plane sc-send"></i>
+                            </div>
+                            <div class="suggest-card" onclick="window.clickPrompt('List core conclusions')">
+                                <div class="sc-icon-wrap"><i class="fas fa-list-check"></i></div>
+                                <h4>List core conclusions</h4>
+                                <p>What did the authors conclude? Summarize the takeaway points.</p>
+                                <i class="far fa-paper-plane sc-send"></i>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ── Input Bar ── -->
+            <div class="input-wrapper">
+                <div class="input-container">
+                    <input id="question" placeholder="Ask a question about your PDF..." autocomplete="off" aria-label="Question"/>
+                    <button class="send-btn" id="sendBtn" onclick="window.askQuestion()" title="Send" aria-label="Send">
+                        <i class="fas fa-arrow-up"></i>
+                    </button>
+                </div>
+                <p class="input-hint">
+                    <i class="fas fa-shield-halved"></i>
+                    AskPaper can make mistakes. Verify important info.
+                </p>
+            </div>
+
+        </main>
+    </div>
+
+    <input type="file" id="pdfFile" hidden accept="application/pdf">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="/static/script.js?v=5"></script>
+</body>
+</html>

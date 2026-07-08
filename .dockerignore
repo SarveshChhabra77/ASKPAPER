@@ -1,0 +1,14 @@
+.git
+.gitignore
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+uploads/
+vectorstore/
+logs/
+.dist/
+notebooks/
+.agents/
+C:\Users\HP\.gemini/
