@@ -1,9 +1,12 @@
 .git
 .gitignore
+.gitattributes
+.github
 __pycache__
 *.pyc
 *.pyo
 *.pyd
+*.egg-info
 .env
 uploads/
 vectorstore/
@@ -11,4 +14,6 @@ logs/
 .dist/
 notebooks/
 .agents/
-C:\Users\HP\.gemini/
+render.yaml
+runtime.txt
+test_*.py
