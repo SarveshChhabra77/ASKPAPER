@@ -19,7 +19,8 @@ COPY --chown=user . .
 
 # Set up environment variables
 ENV PYTHONUNBUFFERED=1 \
-    PYTHONDONTWRITEBYTECODE=1
+    PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONPATH=/app
 
 # Create the required directories and ensure correct permissions
 RUN mkdir -p uploads vectorstore logs && chown -R user:user /app

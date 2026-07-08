@@ -9,10 +9,7 @@ faiss-cpu==1.8.0
 groq==0.9.0
 pypdf==4.2.0
 httpx==0.27.0
-ipykernel
 fastapi==0.111.0
 uvicorn==0.30.1
 aiofiles==23.2.1
-python-multipart==0.0.9
-
--e .
+python-multipart==0.0.9
