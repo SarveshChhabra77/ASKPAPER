@@ -19,4 +19,4 @@ jobs:
         env:
           HF_TOKEN: ${{ secrets.HF_TOKEN }}
         run: |
-          git push --no-verify --force https://sarvesh77:$HF_TOKEN@huggingface.co/spaces/sarvesh77/Askpaper main
+          git push --force https://sarvesh77:$HF_TOKEN@huggingface.co/spaces/sarvesh77/Askpaper main
