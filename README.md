@@ -12,8 +12,7 @@ pinned: false
 
 AskPaper is an **end-to-end Retrieval-Augmented Generation (RAG) application** that allows users to upload PDFs and ask contextual questions powered by Large Language Models.
 
-The system creates **isolated knowledge sessions**, performs semantic retrieval using FAISS, generates answers using Groq-hosted Llama models, and automatically manages data lifecycle through background cleanup.
-
+The system creates **isolated knowledge sessions**, performs semantic retrieval using FAISS, generates answers using Groq-hosted LLMs, and automatically manages data lifecycle through background cleanup.
 ---
 
 ## 🚀 Demo Workflow
@@ -32,7 +31,7 @@ The system creates **isolated knowledge sessions**, performs semantic retrieval 
 * ✅ PDF Question Answering using RAG
 * ✅ Session-based vector databases
 * ✅ Semantic search with HuggingFace embeddings
-* ✅ Groq Llama-3.1 LLM integration
+* ✅ Groq LLM integration with automatic fallback
 * ✅ FastAPI backend architecture
 * ✅ Background worker for automatic cleanup
 * ✅ Manual session deletion endpoint
@@ -66,7 +65,7 @@ FastAPI Web UI + API Layer
 | Component       | Technology                            |
 | --------------- | ------------------------------------- |
 | Backend         | FastAPI                               |
-| LLM             | Groq (Llama-3.1)                      |
+| LLM             | Groq API (groq/compound-mini / Qwen)  |
 | Embeddings      | HuggingFace Sentence Transformers     |
 | Vector Database | FAISS                                 |
 | Frontend        | HTML + JavaScript (FastAPI Templates) |

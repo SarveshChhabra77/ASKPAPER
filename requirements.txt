@@ -5,7 +5,7 @@ langchain-huggingface==0.0.3
 sentence-transformers==3.0.1
 transformers==4.43.3
 torch
-faiss-cpu==1.8.0
+faiss-cpu>=1.9.0
 groq==0.9.0
 pypdf==4.2.0
 httpx==0.27.0
